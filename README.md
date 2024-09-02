@@ -2,7 +2,7 @@
 
 Esta aplicação é destinada a auxiliar pessoas com deficiência visual, utilizando a API do Google Cloud Vision para detectar e reconhecer textos em rótulos e embalagens. A API retorna os nomes das marcas e tipos de produtos, proporcionando uma experiência mais acessível e inclusiva.
 
-##Tecnologias utilizadas
+## Tecnologias utilizadas
 <p align="center">
 	<a href="https://skillicons.dev">
 		<img src="https://skillicons.dev/icons?i=java,spring,gcp,idea,postman" />

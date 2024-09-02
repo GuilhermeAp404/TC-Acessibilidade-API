@@ -13,7 +13,7 @@ Esta aplicação é destinada a auxiliar pessoas com deficiência visual, utiliz
 
 Essa aplicação possui uma rota capaz de receber uma imagem e retornar o texto contido nela.
 
-ˋPOST - /api/visionˋ
+ˋ POST - /api/vision ˋ
 #### Recebe
 Parametro   | Descrição
 --------- | ------

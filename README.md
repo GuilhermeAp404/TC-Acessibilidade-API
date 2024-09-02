@@ -1,4 +1,5 @@
 #Sobre a aplicação
+
 Esta aplicação é destinada a auxiliar pessoas com deficiência visual, utilizando a API do Google Cloud Vision para detectar e reconhecer textos em rótulos e embalagens. A API retorna os nomes das marcas e tipos de produtos, proporcionando uma experiência mais acessível e inclusiva.
 
 ##Tecnologias utilizadas
@@ -9,6 +10,7 @@ Esta aplicação é destinada a auxiliar pessoas com deficiência visual, utiliz
 </p>
 
 ## Funcionalidades
+
 Essa aplicação possui uma rota capaz de receber uma imagem e retornar o texto contido nela.
 
 ˋˋˋ 

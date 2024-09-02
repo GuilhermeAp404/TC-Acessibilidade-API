@@ -19,11 +19,6 @@ public class VisionController {
         this.visionService = visionService;
     }
 
-    @GetMapping
-    public ResponseEntity<String> getRequest(){
-        return new ResponseEntity<>("Get na rota api", HttpStatus.OK);
-    }
-
     @PostMapping("/vision")
     public ResponseEntity<TextDetectionDTO> analyzeImage(@RequestParam("image") MultipartFile image) throws IOException {
         TextDetectionDTO detectionDTO = visionService.analyzeImage(image);

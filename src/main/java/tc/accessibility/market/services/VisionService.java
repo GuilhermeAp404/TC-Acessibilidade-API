@@ -31,7 +31,6 @@ public class VisionService {
      */
     private GoogleCredentials getCredentials() throws IOException {
         String credentialsJson = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
-        System.out.print(credentialsJson);
         if (credentialsJson == null) {
             throw new IOException("GOOGLE_CREDENTIALS_JSON não está definida.");
         }

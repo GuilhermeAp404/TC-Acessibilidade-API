@@ -1,8 +1,10 @@
 package tc.accessibility.market;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,15 @@ public class MarketApplication {
 		public void method(HttpServletResponse httpServletResponse) {
 			httpServletResponse.setHeader("Location", GITHUB_REPO_URL);
 			httpServletResponse.setStatus(302);
+		}
+	}
+
+	@Component
+	public class Runner implements CommandLineRunner {
+		@Override
+		public void run(String... args) throws Exception {
+			String envVariable = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
+			System.out.println(envVariable);
 		}
 	}
 }

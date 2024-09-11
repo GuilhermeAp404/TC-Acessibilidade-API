@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tc.accessibility.market.DTOs.TextDetectionDTO;
+import tc.accessibility.market.DTOs.ProductDetectionDTO;
 import tc.accessibility.market.services.VisionService;
 
 import java.io.IOException;
@@ -20,8 +20,8 @@ public class VisionController {
     }
 
     @PostMapping("/vision")
-    public ResponseEntity<TextDetectionDTO> analyzeImage(@RequestParam("image") MultipartFile image) throws IOException {
-        TextDetectionDTO detectionDTO = visionService.analyzeImage(image);
+    public ResponseEntity<ProductDetectionDTO> analyzeImage(@RequestParam("image") MultipartFile image) throws IOException {
+        ProductDetectionDTO detectionDTO = visionService.analyzeImage(image);
         return new ResponseEntity<>(detectionDTO, HttpStatus.OK);
     }
 }

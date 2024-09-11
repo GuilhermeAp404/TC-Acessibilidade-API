@@ -26,7 +26,7 @@ image | Recebe um arquivo de imagem .jpg ou .png no corpo da requisição.
 Parametro   | Descrição
 --------- | ------
 fullText | Texto completo encontrado na imagem.
-texts | Lista contendo todos os textos da imagem, parte por parte..
+texts | Lista contendo todos os textos da imagem, parte por parte.
 
 
 

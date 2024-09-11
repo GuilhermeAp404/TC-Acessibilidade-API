@@ -5,13 +5,15 @@ import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import tc.accessibility.market.DTOs.TextDetectionDTO;
+import tc.accessibility.market.DTOs.ProductDetectionDTO;
 import tc.accessibility.market.controllers.errors.CloudVisionApiExpection;
+import tc.accessibility.market.utils.StringManipulator;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Documentação utilizada: https://cloud.google.com/vision/docs/libraries?hl=pt-br
@@ -68,7 +70,7 @@ public class VisionService {
      * @throws CloudVisionApiExpection se a API do Google Cloud Vision retornar um erro durante a análise da imagem.
      * @throws RuntimeException se ocorrer qualquer outro erro inesperado durante o processamento.
      */
-    public TextDetectionDTO analyzeImage(MultipartFile image) throws IOException {
+    public ProductDetectionDTO analyzeImage(MultipartFile image) throws IOException {
         try(ImageAnnotatorClient vision = createClient()){
             // Transforma a imagem em um ByteString
             InputStream inputStream = image.getInputStream();
@@ -80,9 +82,18 @@ public class VisionService {
              */
             List<AnnotateImageRequest> requests = new ArrayList<>();
             Image img = Image.newBuilder().setContent(byteString).build();
-            Feature feature = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+            Feature featureTextDetection = Feature.newBuilder()
+                    .setType(Feature.Type.TEXT_DETECTION)
+                    .build();
+            Feature featureWebDetection = Feature.newBuilder()
+                    .setType(Feature.Type.WEB_DETECTION)
+                    .build();
+
             AnnotateImageRequest request =
-                    AnnotateImageRequest.newBuilder().setImage(img).addFeatures(feature).build();
+                    AnnotateImageRequest.newBuilder().setImage(img)
+                            .addFeatures(featureTextDetection)
+                            .addFeatures(featureWebDetection)
+                            .build();
             requests.add(request);
 
             // Realiza a requisição para o Google Cloud Vision API e captura a resposta
@@ -93,19 +104,17 @@ public class VisionService {
                 throw new CloudVisionApiExpection(response.getError().getMessage());
             }
 
-            // Prepara o retorno dos dados para o usuário
-            List<EntityAnnotation> textAnnotation = response.getTextAnnotationsList();
-            List<String> texts = new ArrayList<>();
-            for(EntityAnnotation t: textAnnotation){
-                texts.add(t.getDescription());
+            List<WebDetection.WebPage> webAnnotation = response.getWebDetection().getPagesWithMatchingImagesList();
+            List<String>productsFound = new ArrayList<>();
+            for(WebDetection.WebPage page:webAnnotation){
+                if(page.getUrl().contains(".br")){
+                    productsFound.add(StringManipulator.removeLastSeparator(page.getPageTitle())) ;
+                }
             }
-            texts.remove(0);
 
+            Collections.reverse(productsFound);
             // Retorna um objeto de transferência para o controller responsável
-            return new TextDetectionDTO(
-                    response.getFullTextAnnotation().getText(),
-                    texts
-            );
+            return new ProductDetectionDTO(productsFound);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -109,7 +109,6 @@ public class VisionService {
                 }
             }
 
-            Collections.reverse(productsFound);
             // Retorna um objeto de transferência para o controller responsável
             return new ProductDetectionDTO(productsFound);
 

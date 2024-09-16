@@ -82,18 +82,15 @@ public class VisionService {
              */
             List<AnnotateImageRequest> requests = new ArrayList<>();
             Image img = Image.newBuilder().setContent(byteString).build();
-            Feature featureTextDetection = Feature.newBuilder()
-                    .setType(Feature.Type.TEXT_DETECTION)
-                    .build();
+
             Feature featureWebDetection = Feature.newBuilder()
                     .setType(Feature.Type.WEB_DETECTION)
                     .build();
 
-            AnnotateImageRequest request =
-                    AnnotateImageRequest.newBuilder().setImage(img)
-                            .addFeatures(featureTextDetection)
+            AnnotateImageRequest request = AnnotateImageRequest.newBuilder().setImage(img)
                             .addFeatures(featureWebDetection)
                             .build();
+
             requests.add(request);
 
             // Realiza a requisição para o Google Cloud Vision API e captura a resposta
